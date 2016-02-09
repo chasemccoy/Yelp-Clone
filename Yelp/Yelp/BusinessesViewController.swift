@@ -13,6 +13,7 @@ class BusinessesViewController: UIViewController {
   @IBOutlet var tableView: UITableView!
   
   var businesses: [Business]!
+  var searchBar: UISearchBar!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -20,13 +21,20 @@ class BusinessesViewController: UIViewController {
     tableView.dataSource = self
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 160
+    
+    navigationController?.navigationBar.barTintColor = UIColor(red:0.772, green:0.103, blue:0.003, alpha:1)
+    
+    searchBar = UISearchBar()
+    searchBar.delegate = self
+    searchBar.sizeToFit()
+    navigationItem.titleView = searchBar
 
     Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
       self.businesses = businesses
       self.tableView.reloadData()
     })
 
-/* Example of Yelp search with more search options specified
+    /* Example of Yelp search with more search options specified
     Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
         self.businesses = businesses
         
@@ -35,7 +43,7 @@ class BusinessesViewController: UIViewController {
             print(business.address!)
         }
     }
-*/
+    */
   }
 
   override func didReceiveMemoryWarning() {
@@ -46,7 +54,7 @@ class BusinessesViewController: UIViewController {
 
 extension BusinessesViewController: UITableViewDataSource {
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if businesses != nil {
+    if let businesses = businesses {
       return businesses.count
     }
     else {
@@ -60,6 +68,17 @@ extension BusinessesViewController: UITableViewDataSource {
     cell.business = businesses[indexPath.row]
     
     return cell
+  }
+}
+
+extension BusinessesViewController: UISearchBarDelegate {
+  func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    if let searchText = searchBar.text {
+      Business.searchWithTerm(searchText, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        self.businesses = businesses
+        self.tableView.reloadData()
+      })
+    }
   }
 }
 

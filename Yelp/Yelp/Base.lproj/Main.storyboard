@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--Yelp-->
+        <!--Businesses View Controller-->
         <scene sceneID="5L9-Uz-lNK">
             <objects>
                 <viewController id="2xI-yr-O5N" customClass="BusinessesViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
@@ -149,7 +149,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Yelp" id="fE0-6h-WES"/>
+                    <navigationItem key="navigationItem" id="fE0-6h-WES"/>
                     <connections>
                         <outlet property="tableView" destination="Gic-tC-ZIS" id="KI9-6u-Q0X"/>
                     </connections>

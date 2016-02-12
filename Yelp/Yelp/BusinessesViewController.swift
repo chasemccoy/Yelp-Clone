@@ -21,10 +21,12 @@ class BusinessesViewController: UIViewController {
     tableView.dataSource = self
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 160
+    tableView.keyboardDismissMode = .OnDrag
     
     navigationController?.navigationBar.barTintColor = UIColor(red:0.772, green:0.103, blue:0.003, alpha:1)
     
     searchBar = UISearchBar()
+    searchBar.tintColor = UIColor.whiteColor()
     searchBar.delegate = self
     searchBar.sizeToFit()
     navigationItem.titleView = searchBar
@@ -79,6 +81,21 @@ extension BusinessesViewController: UISearchBarDelegate {
         self.tableView.reloadData()
       })
     }
+  }
+  
+  func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+    searchBar.setShowsCancelButton(true, animated: true)
+    return true;
+  }
+  
+  func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+    searchBar.setShowsCancelButton(false, animated: true)
+    return true;
+  }
+  
+  func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    searchBar.text = ""
+    searchBar.resignFirstResponder()
   }
 }
 
